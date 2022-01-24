@@ -3,18 +3,18 @@ import {createCells} from "Scripts/main/ts/features/cell";
 import {TCell, TOption} from "Scripts/main/ts/types";
 
 export const createField = (size: number): TOption<TCell>[][] => {
-    const result = [];
-
-    let counter = size * size; // Счетчик кол-ва клеток
-
     const cells = createCells(CONSTANTS.cellsNumber());
 
-    console.log('Кол-во клеток', cells.length)
+    return fill([], cells, size);
+}
 
-    for (let i = 0; i < size; i++) {
-        const row = new Array(size);
+function fill(field: TOption<TCell>[][], cells: TCell[], fieldSize: number): TOption<TCell>[][] {
+    let counter = fieldSize * fieldSize; // Счетчик кол-ва клеток
 
-        for (let j = 0; j < size; j++) {
+    for (let i = 0; i < fieldSize; i++) {
+        const row = new Array(fieldSize);
+
+        for (let j = 0; j < fieldSize; j++) {
             /**
              *  Алгоритм случайного распределения клеток.
              *  Пройтись по всему полю, распределяя рандомно клетки
@@ -32,8 +32,8 @@ export const createField = (size: number): TOption<TCell>[][] => {
             }
         }
 
-        result.push(row);
+        field.push(row);
     }
 
-    return result;
+    return field;
 }

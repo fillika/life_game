@@ -1,6 +1,7 @@
 export const CONSTANTS = {
-    fieldSize: 5,
+    renderID: 'ts-main-react',
+    fieldSize: 20,
     cellsNumber: function(): number {
-        return Math.round(this.fieldSize * this.fieldSize / 2.4);
+        return Math.round(this.fieldSize * this.fieldSize / 2.9);
     }
 }
