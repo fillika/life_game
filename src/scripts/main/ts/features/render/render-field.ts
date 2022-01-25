@@ -22,8 +22,9 @@ export const renderField = (field: TOption<TCell>[][]): void => {
             row.insertAdjacentElement('beforeend', isNil(cell) ? createDeadCells() : createAliveCells())
         }
 
-        result.insertAdjacentElement('afterbegin', row);
+        result.insertAdjacentElement('beforeend', row);
     }
 
-    app!.insertAdjacentElement('afterbegin', result);
+    app!.innerHTML = '';
+    app!.insertAdjacentElement('beforeend', result);
 }

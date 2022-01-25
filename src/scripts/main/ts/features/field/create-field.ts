@@ -25,7 +25,7 @@ function fill(field: TOption<TCell>[][], cells: TCell[], fieldSize: number): TOp
                 row[j] = cells.pop();
                 counter--;
             } else if (cells.length > 0) {
-                const chance = Math.random() > 0.5;
+                const chance = Math.random() > 0.7;
 
                 row[j] = chance ? cells.pop() : undefined;
                 counter--;
