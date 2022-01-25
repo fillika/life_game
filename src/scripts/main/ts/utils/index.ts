@@ -1,2 +1,2 @@
-export {isNil} from "Scripts/main/ts/utils/isNil";
-export {CONSTANTS} from "Scripts/main/ts/utils/constants";
+export {isNil} from "./isNil";
+export {CONSTANTS} from "./constants";

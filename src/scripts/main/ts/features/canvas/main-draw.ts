@@ -1,41 +1,29 @@
-import {CONSTANTS, isNil} from "Scripts/main/ts/utils";
+import {isNil} from "Scripts/main/ts/utils";
 import {drawCell} from "Scripts/main/ts/features/canvas/utils";
 import {TCell, TOption} from "Scripts/main/ts/types";
+import {game} from "Scripts/main/ts/game";
 
 export const mainDraw = (generation: TOption<TCell>[][]) => {
-    const canvas = document.getElementById(CONSTANTS.renderID) as HTMLCanvasElement;
-
-    if (isNil(canvas)) {
-        throw new Error(`Canvas с id ${CONSTANTS.renderID} не найден`)
+    if (game.ctx != undefined) {
+        game.ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
     }
 
-    if (canvas.getContext) {
-        const ctx = canvas.getContext('2d');
+    for (let i = 0; i < generation.length; i++) {
+        const row = generation[i];
 
-        const canvasSide = Math.min(window.innerWidth, window.innerHeight) * 0.95;
-        canvas.width = canvas.height = canvasSide;
+        for (let j = 0; j < row.length; j++) {
+            const cell = row[j];
 
-        const cellWidth = canvasSide / CONSTANTS.fieldSize;
-        const cellHeight = canvasSide / CONSTANTS.fieldSize;
-
-        if (ctx != null) {
-            /**
-             *  Кол-во клеток находим за счет перемножения сторон игрового поля
-             */
-            for (let i = 0; i < generation.length; i++) {
-                const row = generation[i];
-
-                for (let j = 0; j < row.length; j++) {
-                    const cell = row[j];
-
-                    drawCell(ctx, !isNil(cell), {x: cellWidth * i, y: j * cellHeight, w: cellWidth, h: cellHeight})
-                }
+            if (game.ctx != undefined) {
+                !isNil(cell) && drawCell(game.ctx, {
+                    x: game.cellWidth * i,
+                    y: j * game.cellHeight,
+                    w: game.cellWidth,
+                    h: game.cellHeight
+                })
             }
-
         }
-
-        // drawing code here
-    } else {
-        // canvas-unsupported code here
     }
+
+
 }
