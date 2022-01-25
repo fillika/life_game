@@ -4,6 +4,7 @@ import {renderField} from "Scripts/main/ts/features/render";
 import {findNeighbors} from "Scripts/main/ts/features/cell";
 import {TCell, TOption} from "Scripts/main/ts/types";
 import {createLog} from "Scripts/main/ts/utils/create-log";
+import {initDraw} from "Scripts/main/ts/features/canvas";
 
 /**
  * todo Рендер должен повторяться в зависимости от условий
@@ -74,4 +75,6 @@ function render(generation: TOption<TCell>[][]) {
     }, 1000)
 }
 
-render(firstGeneration);
+initDraw();
+
+// render(firstGeneration);

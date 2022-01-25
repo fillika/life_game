@@ -16,3 +16,15 @@
 .cell-row {
     display: flex;
 }
+
+canvas {
+    border: 1px solid #000;
+}
+
+main {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
