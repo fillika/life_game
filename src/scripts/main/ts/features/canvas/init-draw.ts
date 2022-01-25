@@ -1,29 +1,67 @@
+import {TCell, TOption} from "Scripts/main/ts/types";
+import {mainDraw} from "Scripts/main/ts/features/canvas/main-draw";
+import {createEmptyField} from "Scripts/main/ts/features/field";
 import {CONSTANTS, isNil} from "Scripts/main/ts/utils";
-import {drawCell} from "Scripts/main/ts/features/canvas/utils";
+import {findNeighbors} from "Scripts/main/ts/features/cell";
+import {game} from "Scripts/main/ts/game";
 
-export const initDraw = () => {
-    const canvas = document.getElementById(CONSTANTS.renderID) as HTMLCanvasElement;
+export const initDraw = (generation: TOption<TCell>[][]) => {
+    const newField: TOption<TCell>[][] = createEmptyField(CONSTANTS.fieldSize);
+    let logData: string = ""; // для логов
 
-    if (isNil(canvas)) {
-        throw new Error(`Canvas с id ${CONSTANTS.renderID} не найден`)
-    }
+    // Пройтись циклом по каждой клетке
+    for (let i = 0; i < generation.length; i++) {
+        const row = generation[i];
 
-    if (canvas.getContext) {
-        const ctx = canvas.getContext('2d');
+        for (let j = 0; j < row.length; j++) {
+            const cell = row[j];
+            const neighbors = findNeighbors(CONSTANTS.fieldSize, CONSTANTS.fieldSize, i, j);
+            let aliveCells = 0;
 
-        const canvasSide = Math.min(window.innerWidth, window.innerHeight);
-        canvas.width = canvas.height = canvasSide * 0.95;
+            // Находим кол-во живых клеток вокруг целевой клетки
+            neighbors.forEach(neighbor => {
+                !isNil(generation[neighbor.x1][neighbor.x2]) ? aliveCells++ : null;
+            })
 
-        if (ctx != null) {
+            // Логика заполнения клеток
+            // Если клетка мертва
+            if (isNil(cell)) {
 
-            // TODO Нарисовать клетки
-
-
-            drawCell(ctx, true)
+                if (aliveCells === 3) {
+                    newField[i][j] = {isAlive: true}
+                    logData += 1;
+                } else {
+                    newField[i][j] = undefined;
+                    logData += 0;
+                }
+            } else { // Если жива
+                if (aliveCells === 2 || aliveCells === 3) {
+                    newField[i][j] = cell;
+                    logData += 1;
+                } else {
+                    newField[i][j] = undefined;
+                    logData += 0;
+                }
+            }
         }
-
-        // drawing code here
-    } else {
-        // canvas-unsupported code here
     }
+
+
+    /**
+     * Проверка включает в себя комбинации клеток, в т.ч. если
+     * все клетки погибли (В строке будут все нули)
+     */
+    if (game.log.includes(logData)) {
+        mainDraw(generation)
+        console.log('GAME OVER. Бесконечный цикл клеток', logData)
+        return;
+    }
+
+    game.log.push(logData); // Записываем лог в историю
+    mainDraw(generation)
+
+    const intervalID = setInterval(() => {
+        initDraw(newField)
+        clearInterval(intervalID)
+    }, CONSTANTS.updateInterval)
 }
