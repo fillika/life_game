@@ -1,7 +1,7 @@
-import {TCell, TOption} from "Scripts/main/ts/types";
+import {TOption} from "Scripts/main/ts/types";
 import {isNil} from "Scripts/main/ts/utils/isNil";
 
-export const createLog = (generation: TOption<TCell>[][]): string => {
+export const createLog = (generation: TOption<number | string>[][]): string => {
     let result = '';
     let zeroCounter = 0;
 

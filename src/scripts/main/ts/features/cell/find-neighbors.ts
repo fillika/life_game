@@ -10,36 +10,37 @@ export const findNeighbors = (fieldHeight: number, rowLength: number, x: number,
     const lastHeightCell = fieldHeight - 1;
     const lastRowCell = rowLength - 1;
 
-    const neighbor1: TNeighbor = {
-        x1: x - 1 < 0 ? lastHeightCell : x - 1,
-        x2: y - 1 < 0 ? lastRowCell : y - 1,
-    };
-    const neighbor2: TNeighbor  = {
+
+    const neighbor1: TNeighbor  = {
         x1: x - 1 < 0 ? lastHeightCell : x - 1,
         x2: y,
     };
-    const neighbor3: TNeighbor  = {
+    const neighbor2: TNeighbor  = {
         x1: x - 1 < 0 ? lastHeightCell : x - 1,
         x2: y + 1 >= rowLength ? 0 : y + 1,
     };
-    const neighbor4: TNeighbor  = {
+    const neighbor3: TNeighbor  = {
         x1: x,
+        x2: y + 1 >= rowLength ? 0 : y + 1,
+    };
+    const neighbor4: TNeighbor  = {
+        x1: x + 1 >= fieldHeight ? 0 : x + 1,
         x2: y + 1 >= rowLength ? 0 : y + 1,
     };
     const neighbor5: TNeighbor  = {
         x1: x + 1 >= fieldHeight ? 0 : x + 1,
-        x2: y + 1 >= rowLength ? 0 : y + 1,
+        x2: y,
     };
     const neighbor6: TNeighbor  = {
         x1: x + 1 >= fieldHeight ? 0 : x + 1,
-        x2: y,
-    };
-    const neighbor7: TNeighbor  = {
-        x1: x + 1 >= fieldHeight ? 0 : x + 1,
         x2: y - 1 < 0 ? lastRowCell : y - 1,
     };
-    const neighbor8: TNeighbor  = {
+    const neighbor7: TNeighbor  = {
         x1: x,
+        x2: y - 1 < 0 ? lastRowCell : y - 1,
+    };
+    const neighbor8: TNeighbor = {
+        x1: x - 1 < 0 ? lastHeightCell : x - 1,
         x2: y - 1 < 0 ? lastRowCell : y - 1,
     };
 

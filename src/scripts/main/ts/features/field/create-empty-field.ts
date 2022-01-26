@@ -1,6 +1,6 @@
-import {TCell, TOption} from "Scripts/main/ts/types";
+import {TOption} from "Scripts/main/ts/types";
 
-export const createEmptyField = (size: number): TOption<TCell>[][] => {
+export const createEmptyField = (size: number): TOption<number | string>[][] => {
     const result = [];
 
     for (let i = 0; i < size; i++){

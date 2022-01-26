@@ -1,14 +1,13 @@
-import {CONSTANTS} from "Scripts/main/ts/utils";
 import {createCells} from "Scripts/main/ts/features/cell";
-import {TCell, TOption} from "Scripts/main/ts/types";
+import {TOption} from "Scripts/main/ts/types";
 
-export const createField = (size: number): TOption<TCell>[][] => {
-    const cells = createCells(CONSTANTS.cellsNumber());
+export const createField = (size: number): TOption<string | number>[][] => {
+    const cells = createCells(Math.round(size * size / 3.1));
 
     return fill([], cells, size);
 }
 
-function fill(field: TOption<TCell>[][], cells: TCell[], fieldSize: number): TOption<TCell>[][] {
+function fill(field: TOption<string | number>[][], cells: string[] | number[], fieldSize: number): TOption<string | number>[][] {
     let counter = fieldSize * fieldSize; // Счетчик кол-ва клеток
 
     for (let i = 0; i < fieldSize; i++) {

@@ -1,9 +1,9 @@
 import {isNil} from "Scripts/main/ts/utils";
 import {drawCell} from "Scripts/main/ts/features/canvas/utils";
-import {TCell, TOption} from "Scripts/main/ts/types";
+import {TOption} from "Scripts/main/ts/types";
 import {game} from "Scripts/main/ts/game";
 
-export const mainDraw = (generation: TOption<TCell>[][]) => {
+export const mainDraw = (generation: TOption<string | number>[][]) => {
     if (game.ctx != undefined) {
         game.ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
     }

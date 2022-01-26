@@ -1,31 +1,34 @@
 import {game} from "Scripts/main/ts/game";
-import {CONSTANTS, isNil} from "Scripts/main/ts/utils";
-import {initDraw} from "Scripts/main/ts/features/canvas";
+import {isNil} from "Scripts/main/ts/utils";
+import {setCanvasSettings} from "Scripts/main/ts/features/canvas";
 
 // Запуск приложения
 
 function start() {
-    const canvas = document.getElementById(CONSTANTS.renderID) as HTMLCanvasElement;
+    const canvas = document.getElementById(game.renderID) as HTMLCanvasElement;
 
     if (isNil(canvas)) {
-        throw new Error(`Canvas с id ${CONSTANTS.renderID} не найден`)
+        throw new Error(`Canvas с id ${game.renderID} не найден`)
     }
 
-    if (canvas.getContext) {
-        const ctx = canvas.getContext('2d');
+    const modal = document.getElementById('modal');
+    const input = document.getElementById('input');
+    const form = document.getElementById('form');
 
-        canvas.width = game.canvasWidth;
-        canvas.height = game.canvasHeight;
-
-        if (ctx != null) {
-            game.setContext = ctx;
-            initDraw(game.firstGeneration);
-        }
-
-        // drawing code here
-    } else {
-        // canvas-unsupported code here
+    if (isNil(modal) || isNil(input) || isNil(form)) {
+        throw new Error('Отсутствуют DOM-элементы');
     }
+
+    input.addEventListener('change', event => {
+        game.fieldSize = parseInt((event.target as HTMLInputElement).value, 10);
+    })
+
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        modal.parentNode!.removeChild(modal)
+        game.start();
+        setCanvasSettings(canvas);
+    })
 }
 
 window.requestAnimationFrame(start);

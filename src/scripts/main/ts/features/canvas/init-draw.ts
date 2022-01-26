@@ -1,12 +1,13 @@
-import {TCell, TOption} from "Scripts/main/ts/types";
+import {TOption} from "Scripts/main/ts/types";
 import {mainDraw} from "Scripts/main/ts/features/canvas/main-draw";
 import {createEmptyField} from "Scripts/main/ts/features/field";
-import {CONSTANTS, isNil} from "Scripts/main/ts/utils";
+import {isNil} from "Scripts/main/ts/utils";
 import {findNeighbors} from "Scripts/main/ts/features/cell";
 import {game} from "Scripts/main/ts/game";
+import {showFinalWindow} from "Scripts/main/ts/utils/show-final-window";
 
-export const initDraw = (generation: TOption<TCell>[][]) => {
-    const newField: TOption<TCell>[][] = createEmptyField(CONSTANTS.fieldSize);
+export const initDraw = (generation: TOption<number | string>[][]) => {
+    const newField: TOption<number | string>[][] = createEmptyField(game.fieldSize);
     let logData: string = ""; // для логов
     let zeroCounter = 0; // Счетчик нулей для декодирования строки
 
@@ -16,19 +17,27 @@ export const initDraw = (generation: TOption<TCell>[][]) => {
 
         for (let j = 0; j < row.length; j++) {
             const cell = row[j];
-            const neighbors = findNeighbors(CONSTANTS.fieldSize, CONSTANTS.fieldSize, i, j);
+            const neighbors = findNeighbors(game.fieldSize, game.fieldSize, i, j);
             let aliveCells = 0;
 
             // Находим кол-во живых клеток вокруг целевой клетки
-            neighbors.forEach(neighbor => {
-                !isNil(generation[neighbor.x1][neighbor.x2]) ? aliveCells++ : null;
-            })
+            for (let k = 0; k < neighbors.length; k++) {
+                const neighbor = neighbors[k];
+
+                !isNil(generation[neighbor.x1][neighbor.x2])
+                    ? aliveCells++
+                    : null;
+
+                if (aliveCells > 3) {
+                    break;
+                }
+            }
 
             // Логика заполнения клеток
             // Если клетка мертва
             if (isNil(cell)) {
                 if (aliveCells === 3) {
-                    newField[i][j] = {isAlive: true}
+                    newField[i][j] = 1
                     logData += zeroCounter + 1;
                     zeroCounter = 0;
                 } else {
@@ -47,14 +56,13 @@ export const initDraw = (generation: TOption<TCell>[][]) => {
             }
         }
     }
-
-
     /**
      * Проверка включает в себя комбинации клеток, в т.ч. если
      * все клетки погибли (В строке будут все нули)
      */
     if (!isNil(game.log[logData])) {
         mainDraw(generation)
+        showFinalWindow();
         console.log('GAME OVER. Бесконечный цикл клеток', logData)
         return;
     }

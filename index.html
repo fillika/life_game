@@ -15,16 +15,32 @@
 </head>
 
 <body class="theme theme--dark">
-    <main>
-        <canvas id="canvas"></canvas>
-    </main>
+<main>
+    <div class="layer" id="modal">
+        <div class="content">
+            <form id="form">
+                <label>
+                    <input type="number" id="input">
+                </label>
+                <button class="start-button" id="start-button">Начать игру</button>
+            </form>
+        </div>
+    </div>
+    <canvas id="canvas"></canvas>
 
-    <script src="./dist/dev/main/dev.main.min.js"></script>
-    <script src="./dist/dev/second/dev.second.min.js"></script>
+    <div class="final-window-layer" id="final-window-layer">
+        <div class="final-window">
+            Игра завершилась, все клетки либо умерли, либо попали в бесконечный цикл равновесия :)
+        </div>
+    </div>
+</main>
 
-    <!-- <script src="./dist/build/libs/react.min.js"></script>
-    <script src="./dist/build/main/build.main.min.js"></script>
-    <script src="./dist/build/second/build.second.min.js"></script> -->
+<script src="./dist/dev/main/dev.main.min.js"></script>
+<script src="./dist/dev/second/dev.second.min.js"></script>
+
+<!-- <script src="./dist/build/libs/react.min.js"></script>
+<script src="./dist/build/main/build.main.min.js"></script>
+<script src="./dist/build/second/build.second.min.js"></script> -->
 </body>
 
 </html>

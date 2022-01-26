@@ -1,10 +1,8 @@
-import {TCell} from "Scripts/main/ts/types";
-
-export const createCells = (count: number): TCell[] => {
+export const createCells = (count: number): string[] | number[] => {
     const result = [];
 
     for (let i = 0; i < count; i++) {
-        result.push({isAlive: true})
+        result.push(1)
     }
 
     return result;

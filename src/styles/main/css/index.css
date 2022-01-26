@@ -2,6 +2,13 @@
     box-sizing: border-box;
 }
 
+input {
+    height: 40px;
+    width: 100%;
+    display: inline-block;
+    padding-left: 10px;
+}
+
 .cell {
     width: 30px;
     height: 30px;
@@ -15,6 +22,56 @@
 
 .cell-row {
     display: flex;
+}
+
+.layer {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: gray;
+}
+
+.content {
+    width: 90%;
+    height: 300px;
+    max-width: 300px;
+    background-color: #fff;
+    padding: 15px;
+}
+
+.start-button {
+    display: block;
+    width: 100px;
+    height: 50px;
+    margin-top: 20px;
+}
+
+.final-window-layer {
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.23);
+}
+
+.final-window-layer--show {
+    display: flex;
+}
+
+.final-window {
+    font-size: 30px;
+    line-height: 1.15em;
+    color: palevioletred;
+    text-align: center;
+    opacity: 1;
+    background-color: snow;
+    max-width: 550px;
+    padding: 40px;
 }
 
 canvas {
